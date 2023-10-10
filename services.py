@@ -90,7 +90,7 @@ def get_current_event_uuid() -> uuid.UUID:
 
 def get_current_domain() -> str:
     response = execute_query(
-        queries.GET_CURRENT_URL,
+        queries.GET_CURRENT_DOMAIN,
         {}
     )
     domain = response[0].rows[0]['domain'].decode()

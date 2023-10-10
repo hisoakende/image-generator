@@ -18,7 +18,7 @@ SET_DOMAIN = f"""
     
     $datetime_parse = DateTime::Parse("%Y-%m-%dT%H:%M:%SZ");
     
-    INSERT INTO {config.YDB_URL_TABLE} (uuid, domain, created_at) 
+    INSERT INTO {config.YDB_DOMAIN_TABLE} (uuid, domain, created_at) 
     VALUES ($uuid, $domain, DateTime::MakeDatetime($datetime_parse($created_at)));
 """
 
@@ -29,9 +29,9 @@ GET_CURRENT_EVENT_UUID = f"""
     LIMIT 1
 """
 
-GET_CURRENT_URL = f"""
+GET_CURRENT_DOMAIN = f"""
     SELECT domain, created_at
-    FROM {config.YDB_URL_TABLE}
+    FROM {config.YDB_DOMAIN_TABLE}
     ORDER BY created_at DESC 
     LIMIT 1
 """

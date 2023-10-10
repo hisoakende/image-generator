@@ -15,11 +15,11 @@ REGION_NAME = 'ru-central1'
 YDB_DATABASE = os.getenv('YDB_DATABASE')
 YDB_ENDPOINT = os.getenv('YDB_ENDPOINT')
 YDB_EVENT_TABLE = 'event'
-YDB_URL_TABLE = 'domain'
+YDB_DOMAIN_TABLE = 'domain'
 
 OS_ENDPOINT_URL = 'https://storage.yandexcloud.net'
-OS_RAW_BUCKET_NAME = 'rawstorage'
-OS_GENERATED_BUCKET_NAME = 'generatedstorage'
+OS_RAW_BUCKET_NAME = 'sd-rawstorage'
+OS_GENERATED_BUCKET_NAME = 'sd-generatedstorage'
 
 MQ_ENDPOINT_URL = os.getenv('MQ_ENDPOINT_URL')
 MQ_QUERY_ENDPOINT_URL = os.getenv('MQ_QUERY_ENDPOINT_URL')
