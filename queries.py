@@ -11,20 +11,27 @@ SET_EVENT = f"""
     VALUES ($uuid, $name, DateTime::MakeDatetime($datetime_parse($created_at)));
 """
 
-SET_URL = f"""
+SET_DOMAIN = f"""
     DECLARE $uuid AS STRING;
-    DECLARE $url AS STRING;
+    DECLARE $domain AS STRING;
     DECLARE $created_at AS STRING;
     
     $datetime_parse = DateTime::Parse("%Y-%m-%dT%H:%M:%SZ");
     
-    INSERT INTO {config.YDB_URL_TABLE} (uuid, url, created_at) 
-    VALUES ($uuid, $url, DateTime::MakeDatetime($datetime_parse($created_at)));
+    INSERT INTO {config.YDB_URL_TABLE} (uuid, domain, created_at) 
+    VALUES ($uuid, $domain, DateTime::MakeDatetime($datetime_parse($created_at)));
 """
 
 GET_CURRENT_EVENT_UUID = f"""
     SELECT uuid, created_at
     FROM {config.YDB_EVENT_TABLE}
+    ORDER BY created_at DESC 
+    LIMIT 1
+"""
+
+GET_CURRENT_URL = f"""
+    SELECT domain, created_at
+    FROM {config.YDB_URL_TABLE}
     ORDER BY created_at DESC 
     LIMIT 1
 """

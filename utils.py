@@ -39,6 +39,12 @@ def create_image_relative_path(image: 'Image', event_uuid: uuid.UUID) -> str:
     return f'{event_uuid}/{image.name}'
 
 
+def get_generation_args(raw_image: 'RawImage',
+                        image_relative_path: str) -> dict[str, str | int | float]:
+    generation_args = {k: v for k, v in vars(raw_image).items() if k not in ('image_data', 'name')}
+    return generation_args | {'image_relative_path': image_relative_path}
+
+
 def create_generated_image_absolute_path(relative_path: str) -> str:
     return f'{config.OS_ENDPOINT_URL}/{config.OS_GENERATED_BUCKET_NAME}/{relative_path}'
 
@@ -60,8 +66,8 @@ def process_model_from_request(model_class: type['Model']) -> Callable:
 
 def process_data_from_trigger(func: Callable) -> Callable:
     def wrapper(event: dict[str, Any], context: 'RuntimeContext') -> dict[str, Any]:
-        data = event['messages'][0]['details']['message']['body']
-        return func(event, context, data)
+        body = event['messages'][0]['details']['message']['body']
+        return func(event, context, json.loads(body))
 
     return wrapper
 

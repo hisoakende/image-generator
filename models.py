@@ -30,15 +30,30 @@ class Event(Model, UUIDFieldMixin, CreatedAtFieldMixin):
         self.name = name
 
 
-class URL(Model, UUIDFieldMixin, CreatedAtFieldMixin):
+class Domain(Model, UUIDFieldMixin, CreatedAtFieldMixin):
 
-    def __init__(self, url: str) -> None:
+    def __init__(self, domain: str) -> None:
         super().__init__()
-        self.url = url
+        self.domain = domain
 
 
 class RawImage(Model):
 
-    def __init__(self, image: str) -> None:
-        self.image_data = validate_base64_image(image)
+    def __init__(self,
+                 text: str,
+                 mask_blur: int,
+                 steps: int,
+                 denoising_strength: float,
+                 cfg_scale: int,
+                 width: int,
+                 height: int,
+                 webImg64: str) -> None:
+        self.promt = text
+        self.mask_blur = mask_blur
+        self.steps = steps
+        self.denoising_strength = denoising_strength
+        self.cfg_scale = cfg_scale
+        self.width = width
+        self.height = height
+        self.image_data = validate_base64_image(webImg64)
         self.name = create_filename(self.image_data)
